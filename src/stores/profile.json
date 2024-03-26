@@ -1,0 +1,10 @@
+{
+    "username": "John Doe",
+    "email": "johndoe@example.com",
+    "wallet": {
+        "balance": 1000
+    },
+    "profile_image": "https://www.svgrepo.com/show/316857/profile-simple.svg"
+}
+
+
