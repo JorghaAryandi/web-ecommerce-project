@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 interface Product {
-  id: string;
+  id: number;
   title: string;
   price: number;
   description: string;
@@ -68,6 +68,20 @@ export const useProductStore = defineStore({
         console.error("Error fetching Product:", error);
       }
     },
+    async fetchByCategory(category: string) {
+      try {
+        const response = await fetch(
+          `https://fakestoreapi.com/products/category/${category}`
+        );
+        const data = await response.json();
+        this.viewedData = data;
+      } catch (error) {
+        console.error(
+          `Error fetching Products by category ${category}:`,
+          error
+        );
+      }
+    },
 
     setFilteredData(data: Product[]) {
       this.viewedData = data;
@@ -83,7 +97,7 @@ export const useProductStore = defineStore({
       this.viewedData.sort(sortFunctions[sortType]);
     },
 
-    filterByRating(selectedRating) {
+    filterByRating(selectedRating: number) {
       this.viewedData =
         selectedRating === 0
           ? this.masterData

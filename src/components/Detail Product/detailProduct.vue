@@ -23,44 +23,12 @@
 
           <div v-if="isInCart(DetailProduct.id)" class="d-flex">
             <div class="col-md-3">
-              <div class="input-group">
-                <!-- Button for decreasing quantity -->
-                <button
-                  class="btn btn-outline-dark"
-                  @click="decreaseQuantity(DetailProduct.id)"
-                >
-                  -
-                </button>
-
-                <!-- Input number for quantity -->
-                <input
-                  type="text"
-                  class="form-control text-center"
-                  :value="getQuantity(DetailProduct.id)"
-                  @input="updateQuantity(DetailProduct.id, $event.target)"
-                  pattern="[0-9]*"
-                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                />
-
-                <!-- Button for increasing quantity -->
-                <button
-                  class="btn btn-outline-dark"
-                  @click="increaseQuantity(DetailProduct.id)"
-                >
-                  +
-                </button>
-              </div>
+              <inputQty :product="DetailProduct" />
             </div>
           </div>
 
           <div v-else class="d-flex">
-            <button
-              class="btn btn-outline-dark flex-shrink-0"
-              @click="addToCart(DetailProduct)"
-            >
-              <i class="bi-cart-fill me-1"></i>
-              Add to cart
-            </button>
+            <addToCartBtn :product="DetailProduct" />
           </div>
         </div>
       </div>
@@ -73,6 +41,8 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useProductStore } from "@/stores/product";
 import { useCartStore } from "@/stores/cart";
+import addToCartBtn from "../addToCartbutton.vue";
+import inputQty from "../inputQty.vue";
 
 const route = useRoute();
 const cartStore = useCartStore();
@@ -94,10 +64,6 @@ watch(
   }
 );
 
-const addToCart = (product) => {
-  cartStore.addItem(product);
-};
-
 const isInCart = (productId) => {
   return cartItems.value.some((item) => item.id === productId);
 };
@@ -108,23 +74,4 @@ const getQuantity = (productId) => {
 };
 
 const quantity = ref(getQuantity(productId));
-
-const updateQuantity = (productId, event) => {
-  const parsedQuantity = parseInt(event.target.value);
-  if (!isNaN(parsedQuantity) && parsedQuantity > 0) {
-    cartStore.updateCartItemQuantity(productId, parsedQuantity);
-  } else {
-    cartStore.removeCartItem(productId);
-  }
-};
-
-const decreaseQuantity = (productId) => {
-  cartStore.decreaseQuantity(productId);
-  quantity.value = getQuantity(productId);
-};
-
-const increaseQuantity = (productId) => {
-  cartStore.increaseQuantity(productId);
-  quantity.value = getQuantity(productId);
-};
 </script>

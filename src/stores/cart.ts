@@ -154,6 +154,22 @@ export const useCartStore = defineStore("cart", {
     },
     async checkoutAndAddToHistory() {
       const checkedItems = this.getCheckedItems;
+
+      // Validasi untuk quantity tidak boleh 0
+      const hasInvalidQuantity = checkedItems.some((item) => {
+        console.log("Item:", item); // Debugging: Lihat item mana yang memiliki quantity <= 0 atau NaN
+        return item.quantity <= 0 || isNaN(item.quantity);
+      });
+
+      if (hasInvalidQuantity) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Quantity cannot be 0!",
+        });
+        return;
+      }
+
       const total = checkedItems.reduce((total, item) => {
         return total + parseFloat(item.price) * item.quantity;
       }, 0);
@@ -166,7 +182,6 @@ export const useCartStore = defineStore("cart", {
           title: "Oops...",
           text: "Balance is Not Enough!",
         });
-        return;
         return;
       }
 

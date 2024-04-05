@@ -29,9 +29,9 @@
             <thead>
               <tr class="text-center">
                 <th>Select</th>
-                <th style="width: 60%">Produk</th>
-                <th style="width: 12%">Price</th>
-                <th style="width: 10%">Quantity</th>
+                <th style="width: 45%">Produk</th>
+                <th style="width: 20%">Price</th>
+                <th style="width: 20%">Quantity</th>
               </tr>
             </thead>
             <tbody>
@@ -62,12 +62,7 @@
                 </td>
                 <td data-th="Price" class="text-center">$ {{ item.price }}</td>
                 <td data-th="Quantity">
-                  <input
-                    type="number"
-                    class="form-control form-control-lg text-center"
-                    v-model="item.quantity"
-                    min="1"
-                  />
+                  <inputQty :product="item" />
                 </td>
               </tr>
             </tbody>
@@ -105,9 +100,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cart";
 import { useProfileStore } from "@/stores/profile";
+import inputQty from "../inputQty.vue";
 
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.getAllItems);
@@ -116,7 +111,6 @@ const removeCheckedItems = cartStore.removeCheckedItems;
 const toggleCheckbox = cartStore.toggleCheckbox;
 
 const profileStore = useProfileStore();
-const balanceProfile = computed(() => profileStore.getBalance);
 
 const subtotal = computed(() => {
   const checkedItems = cartStore.getCheckedItems;
