@@ -8,20 +8,10 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import { useCartStore } from "@/stores/cart";
+import { Cart } from "@/stores/property/Cart";
 
 const props = defineProps<{
-  product: {
-    id: number;
-    title: string;
-    price: number;
-    description: string;
-    category: string[];
-    image: string;
-    rating: {
-      rate: number;
-      count: number;
-    };
-  };
+  product: Cart;
 }>();
 
 const cartStore = useCartStore();

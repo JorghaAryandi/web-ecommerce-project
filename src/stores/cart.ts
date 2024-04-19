@@ -1,15 +1,9 @@
 import { defineStore } from "pinia";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { useProfileStore } from "@/stores/profile";
+import { Cart } from "@/stores/property/Cart";
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
-
-interface CartItem extends Product {
+interface CartItem extends Cart {
   quantity: number;
   checked: boolean;
 }
@@ -43,7 +37,7 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    addItem(product: Product) {
+    addItem(product: Cart) {
       const existingItemIndex = this.items.findIndex(
         (item) => item.id === product.id
       );
@@ -65,7 +59,7 @@ export const useCartStore = defineStore("cart", {
       }
       console.log("Seluruh item di dalam keranjang:", this.items);
     },
-    removeItem(product: Product) {
+    removeItem(product: Cart) {
       const existingItemIndex = this.items.findIndex(
         (item) => item.id === product.id
       );
@@ -144,7 +138,7 @@ export const useCartStore = defineStore("cart", {
         id: "INV " + formattedDateTime,
         items: items,
         totalPrice: items.reduce(
-          (total, item) => total + parseFloat(item.price) * item.quantity,
+          (total, item) => total + item.price * item.quantity,
           0
         ),
       };
