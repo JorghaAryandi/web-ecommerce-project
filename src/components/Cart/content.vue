@@ -106,7 +106,7 @@ import inputQty from "../inputQty.vue";
 
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.getAllItems);
-const totalItems = computed(() => cartStore.getTotalItemCart);
+const totalItems = computed(() => cartStore.getTotalQuantity);
 const removeCheckedItems = cartStore.removeCheckedItems;
 const toggleCheckbox = cartStore.toggleCheckbox;
 

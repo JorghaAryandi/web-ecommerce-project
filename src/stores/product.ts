@@ -114,9 +114,10 @@ export const useProductStore = defineStore({
           filtered = filtered.filter((product) =>
             product.category.includes(this.selectCategory)
           );
-        } else {
+        } else if (this.selectCategoryChanged) {
           await this.fetchProducts();
         }
+        this.selectCategoryChanged = false;
 
         // Lakukan pengurutan berdasarkan jenis pengurutan yang dipilih
         switch (this.sortingType) {

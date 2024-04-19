@@ -14,13 +14,11 @@ import { useProductStore } from "@/stores/product";
 
 const productStore = useProductStore();
 
+const updateFilteredProducts = () => {
+  productStore.updateFilteredProducts();
+};
+
 watchEffect(() => {
   updateFilteredProducts();
 });
-
-function updateFilteredProducts() {
-  const { selectCategory, sortingType, ratingRate } = productStore;
-
-  productStore.updateFilteredProducts(selectCategory, sortingType, ratingRate);
-}
 </script>

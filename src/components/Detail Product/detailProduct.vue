@@ -49,7 +49,7 @@ const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.getAllItems);
 
 const productStore = useProductStore();
-const productId = route.params.id;
+const productId = route.params.id as string;
 
 const DetailProduct = ref(null);
 
