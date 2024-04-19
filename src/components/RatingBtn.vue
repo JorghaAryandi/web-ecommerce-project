@@ -33,31 +33,24 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, computed } from "vue";
 import { useProductStore } from "@/stores/product";
 
 const productStore = useProductStore();
-const viewedProducts = productStore.getViewedData;
 
 const showRekomendasi2 = ref(false);
-const selectedRating = ref(0);
 
 const toggleRating = () => {
   showRekomendasi2.value = !showRekomendasi2.value;
 };
 
+const selectedRating = computed({
+  get: () => productStore.getRatingRate,
+  set: (rating) => productStore.setRatingRate(rating),
+});
+
 const resetRating = () => {
   selectedRating.value = 0;
-  updateFilteredData();
 };
-
-const updateFilteredData = () => {
-  productStore.filterByRating(selectedRating.value);
-};
-
-watch(selectedRating, () => {
-  updateFilteredData();
-});
 </script>

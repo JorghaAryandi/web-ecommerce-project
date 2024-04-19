@@ -32,22 +32,14 @@ import { useProductStore } from "@/stores/product";
 const productStore = useProductStore();
 
 const categories = computed(() => productStore.getCategories);
-const viewedProducts = computed(() => productStore.getViewedData);
 
-const selectedCategory = ref("All");
-const selectedRating = ref(0); // Added for rating
+const selectedCategory = computed({
+  get: () => productStore.getSelectedCategory,
+  set: (category) => productStore.setCategory(category),
+});
 
 const selectCategory = (category) => {
   selectedCategory.value = category;
-  updateFilteredData();
-};
-
-const updateFilteredData = () => {
-  if (selectedCategory.value === "All") {
-    productStore.filterByRating(selectedRating.value);
-  } else {
-    productStore.fetchByCategory(selectedCategory.value);
-  }
 };
 </script>
 

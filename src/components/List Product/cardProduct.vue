@@ -1,12 +1,12 @@
 <template>
   <section class="py-5">
-    <div v-if="viewedProducts.length > 0" class="container px-4 px-lg-5 mt-5">
+    <div v-if="filteredProducts.length > 0" class="container px-4 px-lg-5 mt-5">
       <div
         class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
       >
         <div
           class="col mb-5"
-          v-for="product in viewedProducts"
+          v-for="product in filteredProducts"
           :key="product.id"
         >
           <div class="card h-100 shadow mb-5 rounded">
@@ -81,13 +81,12 @@ const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.getAllItems);
 
 const productStore = useProductStore();
-const products = computed(() => productStore.getMasterData);
-const viewedProducts = computed(() => productStore.getViewedData);
 
 onMounted(() => {
-  productStore.fetchProducts();
   productStore.fetchCategories();
 });
+
+const filteredProducts = computed(() => productStore.filteredProducts);
 
 const isInCart = (productId) => {
   return cartItems.value.some((item) => item.id === productId);

@@ -7,6 +7,20 @@
 </template>
 
 <script setup lang="ts">
+import { watchEffect } from "vue";
 import Filter from "@/components/List Product/filter.vue";
 import CardProduct from "@/components/List Product/cardProduct.vue";
+import { useProductStore } from "@/stores/product";
+
+const productStore = useProductStore();
+
+watchEffect(() => {
+  updateFilteredProducts();
+});
+
+function updateFilteredProducts() {
+  const { selectCategory, sortingType, ratingRate } = productStore;
+
+  productStore.updateFilteredProducts(selectCategory, sortingType, ratingRate);
+}
 </script>
